@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
-
+#include <filesystem>
+#include <iostream>
+using namespace std;
 int main()
 {
     auto window = sf::RenderWindow({1920u, 1080u}, "CMake SFML Project");

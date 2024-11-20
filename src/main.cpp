@@ -1,12 +1,13 @@
 #include <SFML/Graphics.hpp>
 #include <filesystem>
 #include <iostream>
+#include <GameMap.hpp>
 using namespace std;
 int main()
 {
-    auto window = sf::RenderWindow({1920u, 1080u}, "CMake SFML Project");
+    auto window = sf::RenderWindow({448u, 576u}, "Pacman");
     window.setFramerateLimit(144);
-
+    GameMap gameMap;
     while (window.isOpen())
     {
         for (auto event = sf::Event(); window.pollEvent(event);)
@@ -16,8 +17,8 @@ int main()
                 window.close();
             }
         }
-
         window.clear();
+        gameMap.displayMap(window);
         window.display();
     }
 }

@@ -13,9 +13,15 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp)
-target_link_libraries(main PRIVATE sfml-graphics)
+add_executable(main src/main.cpp src/GameMap.cpp)
+
+
+target_include_directories(main PRIVATE ${CMAKE_SOURCE_DIR}/Headers)
+target_link_libraries(main PRIVATE sfml-graphics sfml-audio)
 target_compile_features(main PRIVATE cxx_std_17)
+
+file(COPY ${CMAKE_SOURCE_DIR}/Resources 
+     DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 if(WIN32)
     add_custom_command(

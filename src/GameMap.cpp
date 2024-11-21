@@ -1,6 +1,5 @@
 #include "GameMap.hpp"
 GameMap::GameMap(){
-    //wrong game map
     mapData = {
     "                            ",
     "                            ",

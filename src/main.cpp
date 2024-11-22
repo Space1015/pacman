@@ -8,6 +8,7 @@ int main()
     auto window = sf::RenderWindow({896u, 1152u}, "Pacman");
     window.setFramerateLimit(144);
     GameMap gameMap;
+    Pacman pacman;
     while (window.isOpen())
     {
         for (auto event = sf::Event(); window.pollEvent(event);)
@@ -18,7 +19,7 @@ int main()
             }
         }
         window.clear();
-        gameMap.displayMap(window);
+        gameMap.displayMap(window, pacman);
         window.display();
     }
 }

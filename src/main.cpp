@@ -5,7 +5,7 @@
 using namespace std;
 int main()
 {
-    auto window = sf::RenderWindow({448u, 576u}, "Pacman");
+    auto window = sf::RenderWindow({896u, 1152u}, "Pacman");
     window.setFramerateLimit(144);
     GameMap gameMap;
     while (window.isOpen())

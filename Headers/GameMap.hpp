@@ -9,6 +9,8 @@ class GameMap
 {
     public:
         GameMap();
+        sf::Sprite mapSprite;
+        sf::Texture mapTexture;
         void displayMap(sf::RenderWindow& window);
     private:
         vector<string> mapData;

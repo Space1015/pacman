@@ -36,7 +36,9 @@ GameMap::GameMap(){
     "                            ",
     "                            ",
     };
+    mapTexture.loadFromFile("Resources/pacman.png");
+    mapSprite.setTexture(mapTexture);
 }
 void GameMap::displayMap(sf::RenderWindow& window){
-    //draw pacman.png
+    window.draw(mapSprite);
 }

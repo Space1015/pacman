@@ -6,7 +6,7 @@ using namespace std;
 const unsigned speed = 176;
 int main()
 {
-    auto window = sf::RenderWindow({896u, 1152u}, "Pacman");
+    auto window = sf::RenderWindow({896u, 1088u}, "Pacman");
     window.setFramerateLimit(60);
     GameMap gameMap;
     Pacman pacman;

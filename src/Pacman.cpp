@@ -2,6 +2,6 @@
 Pacman::Pacman(){
     charTexture.loadFromFile("Resources/pacman.png");
     charSprite.setTexture(charTexture);
-    charSprite.setPosition(32*13+16,640);
+    charSprite.setPosition(0,32*4);
     States dir = States::STILL;
 }

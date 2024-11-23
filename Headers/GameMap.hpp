@@ -13,6 +13,5 @@ class GameMap
         sf::Sprite mapSprite;
         sf::Texture mapTexture;
         void displayMap(sf::RenderWindow& window, Pacman pacman);
-    private:
         vector<string> mapData;
 };

@@ -11,5 +11,12 @@ class Pacman
         Pacman();
         sf::Sprite charSprite;
         sf::Texture charTexture;
-        enum class States;
+        enum class States{
+            STILL,
+            UP,
+            DOWN,
+            LEFT,
+            RIGHT
+        };
+        States dir;
 };

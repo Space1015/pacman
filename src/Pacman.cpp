@@ -1,7 +1,7 @@
 #include "Pacman.hpp"
-Pacman::Pacman(){
+Pacman::Pacman() : dir(States::STILL) { // Use member initializer list
     charTexture.loadFromFile("Resources/pacman.png");
     charSprite.setTexture(charTexture);
-    charSprite.setPosition(0,32*4);
-    States dir = States::STILL;
+    charSprite.setPosition(216, 320);
 }
+

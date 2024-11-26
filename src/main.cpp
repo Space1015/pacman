@@ -66,6 +66,7 @@ int main()
     
     while (window.isOpen())
     {
+        //pacman animation
         float deltaTime = clock.restart().asSeconds();
         animation_timer += deltaTime;
         if (animation_timer >= ANIMATION_FRAME_DURATION) {
@@ -80,7 +81,7 @@ int main()
                 pacman.charSprite.setTextureRect(pacmanTextureRect);
             }
         }
-
+        //check for game end
         for (auto event = sf::Event(); window.pollEvent(event);)
         {
             if (event.type == sf::Event::Closed)
@@ -88,6 +89,7 @@ int main()
                 window.close();
             }
         }
+        //pacman keyboard control movement and animation
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
             if(empty((int)posx(pacman) + 8,(int)posy(pacman) - (mod(posy(pacman)) == 0 ? 1: 0), gameMap) && abs(align(posx(pacman)) - posx(pacman)) < 2){
                 pacman.dir = Pacman::States::UP;
@@ -117,6 +119,8 @@ int main()
             sf::IntRect pacmanTextureRect(current_frame * 16, 0, 16, 16);
             pacman.charSprite.setTextureRect(pacmanTextureRect);
         }
+
+        //i'm not sure what this is
         if (pacman.dir == Pacman::States::RIGHT) {
             std::cout << "Moving right" << std::endl;
         } else if (pacman.dir == Pacman::States::LEFT) {
@@ -129,6 +133,7 @@ int main()
             std::cout << "Not moving (STILL)" << std::endl;
         }
 
+        //movement alignment 
         if(pacman.dir == Pacman::States::UP){
             if(empty((int)posx(pacman), (int)(posy(pacman) - deltaTime * speed), gameMap)){
                 pacman.charSprite.setPosition(align(posx(pacman)),posy(pacman) - deltaTime * speed);

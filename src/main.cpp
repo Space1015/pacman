@@ -71,14 +71,12 @@ int main()
         if (animation_timer >= ANIMATION_FRAME_DURATION) {
             animation_timer = 0.0f;
             if (current_frame%2==0) {
-                current_frame = current_frame + 1;
-                sf::IntRect pacmanTextureRect(current_frame * 16, 0, 16, 16);
-                pacman.charSprite.setTextureRect(pacmanTextureRect);
+                current_frame++;
             } else {
-                current_frame = current_frame - 1;
-                sf::IntRect pacmanTextureRect(current_frame * 16, 0, 16, 16);
-                pacman.charSprite.setTextureRect(pacmanTextureRect);
+                current_frame--;
             }
+            sf::IntRect pacmanTextureRect(current_frame * 16, 0, 16, 16);
+                pacman.charSprite.setTextureRect(pacmanTextureRect);
         }
 
         for (auto event = sf::Event(); window.pollEvent(event);)
@@ -91,44 +89,26 @@ int main()
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
             if(empty((int)posx(pacman) + 8,(int)posy(pacman) - (mod(posy(pacman)) == 0 ? 1: 0), gameMap) && abs(align(posx(pacman)) - posx(pacman)) < 2){
                 pacman.dir = Pacman::States::UP;
+                if(current_frame != 3) current_frame = 2;
             }
-            current_frame = 2;
-            sf::IntRect pacmanTextureRect(current_frame * 16, 0, 16, 16);
-            pacman.charSprite.setTextureRect(pacmanTextureRect);
         }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
             if(empty((int)posx(pacman) - (mod(posx(pacman)) == 0 ? 1: 0),(int)posy(pacman) + 8, gameMap) && abs(align(posy(pacman)) - posy(pacman)) < 2){
                 pacman.dir = Pacman::States::LEFT;
+                if(current_frame != 1) current_frame = 0;
             }
-            current_frame = 0;
-            sf::IntRect pacmanTextureRect(current_frame * 16, 0, 16, 16);
-            pacman.charSprite.setTextureRect(pacmanTextureRect);
         }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
             if(empty((int)posx(pacman) + 8,(int)posy(pacman) + 16 + (mod(posy(pacman)) == 0 ? 1: 0), gameMap) && abs(align(posx(pacman)) - posx(pacman)) < 2){
                 pacman.dir = Pacman::States::DOWN;
+                if(current_frame != 7)current_frame = 6;
             }
-            current_frame = 6;
-            sf::IntRect pacmanTextureRect(current_frame * 16, 0, 16, 16);
-            pacman.charSprite.setTextureRect(pacmanTextureRect);
         }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
             if(empty((int)posx(pacman) + 16 + (mod(posx(pacman)) == 0 ? 1: 0),(int)posy(pacman) + 8, gameMap) && abs(align(posy(pacman)) - posy(pacman)) < 2){
                 pacman.dir = Pacman::States::RIGHT;
+                if(current_frame != 5) current_frame = 4;
             }
-            current_frame = 4;
-            sf::IntRect pacmanTextureRect(current_frame * 16, 0, 16, 16);
-            pacman.charSprite.setTextureRect(pacmanTextureRect);
         }
-        if (pacman.dir == Pacman::States::RIGHT) {
-            std::cout << "Moving right" << std::endl;
-        } else if (pacman.dir == Pacman::States::LEFT) {
-            std::cout << "Moving left" << std::endl;
-        } else if (pacman.dir == Pacman::States::UP) {
-            std::cout << "Moving up" << std::endl;
-        } else if (pacman.dir == Pacman::States::DOWN) {
-            std::cout << "Moving down" << std::endl;
-        } else if (pacman.dir == Pacman::States::STILL) {
-            std::cout << "Not moving (STILL)" << std::endl;
-        }
-
+        sf::IntRect pacmanTextureRect(current_frame * 16, 0, 16, 16);
+        pacman.charSprite.setTextureRect(pacmanTextureRect);
         if(pacman.dir == Pacman::States::UP){
             if(empty((int)posx(pacman), (int)(posy(pacman) - deltaTime * speed), gameMap)){
                 pacman.charSprite.setPosition(align(posx(pacman)),posy(pacman) - deltaTime * speed);

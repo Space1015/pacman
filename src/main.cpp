@@ -67,6 +67,7 @@ int main()
     while (window.isOpen())
     {
         //pacman animation
+        pacman.dupe.setPosition(-100,-100);
         float deltaTime = clock.restart().asSeconds();
         animation_timer += deltaTime;
         if (animation_timer >= ANIMATION_FRAME_DURATION) {
@@ -77,7 +78,8 @@ int main()
                 current_frame--;
             }
             sf::IntRect pacmanTextureRect(current_frame * 16, 0, 16, 16);
-                pacman.charSprite.setTextureRect(pacmanTextureRect);
+            pacman.charSprite.setTextureRect(pacmanTextureRect);
+            pacman.dupe.setTextureRect(pacmanTextureRect);
         }
         //check for game end
         for (auto event = sf::Event(); window.pollEvent(event);)
@@ -94,7 +96,10 @@ int main()
                 if(current_frame != 3) current_frame = 2;
             }
         }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-            if(empty((int)posx(pacman) - (mod(posx(pacman)) == 0 ? 1: 0),(int)posy(pacman) + 8, gameMap) && abs(align(posy(pacman)) - posy(pacman)) < 2){
+            if((int)posx(pacman) == 0){
+                pacman.dir = Pacman::States::LEFT;
+                if(current_frame != 1) current_frame = 0;
+            }if(empty((int)posx(pacman) - (mod(posx(pacman)) == 0 ? 1: 0),(int)posy(pacman) + 8, gameMap) && abs(align(posy(pacman)) - posy(pacman)) < 2){
                 pacman.dir = Pacman::States::LEFT;
                 if(current_frame != 1) current_frame = 0;
             }
@@ -104,31 +109,16 @@ int main()
                 if(current_frame != 7)current_frame = 6;
             }
         }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-            if(empty((int)posx(pacman) + 16 + (mod(posx(pacman)) == 0 ? 1: 0),(int)posy(pacman) + 8, gameMap) && abs(align(posy(pacman)) - posy(pacman)) < 2){
+            if(posx(pacman) - 27 * 14 > 0){
+                pacman.dir = Pacman::States::RIGHT;
+                if(current_frame != 5) current_frame = 4;
+            }else if(empty((int)posx(pacman) + 16 + (mod(posx(pacman)) == 0 ? 1: 0),(int)posy(pacman) + 8, gameMap) && abs(align(posy(pacman)) - posy(pacman)) < 2){
                 pacman.dir = Pacman::States::RIGHT;
                 if(current_frame != 5) current_frame = 4;
             }
         }
-<<<<<<< HEAD
         sf::IntRect pacmanTextureRect(current_frame * 16, 0, 16, 16);
         pacman.charSprite.setTextureRect(pacmanTextureRect);
-=======
-
-        //i'm not sure what this is
-        if (pacman.dir == Pacman::States::RIGHT) {
-            std::cout << "Moving right" << std::endl;
-        } else if (pacman.dir == Pacman::States::LEFT) {
-            std::cout << "Moving left" << std::endl;
-        } else if (pacman.dir == Pacman::States::UP) {
-            std::cout << "Moving up" << std::endl;
-        } else if (pacman.dir == Pacman::States::DOWN) {
-            std::cout << "Moving down" << std::endl;
-        } else if (pacman.dir == Pacman::States::STILL) {
-            std::cout << "Not moving (STILL)" << std::endl;
-        }
-
-        //movement alignment 
->>>>>>> 1dc110447a8fe8f1ac1ff14d01e778cd63efbb8e
         if(pacman.dir == Pacman::States::UP){
             if(empty((int)posx(pacman), (int)(posy(pacman) - deltaTime * speed), gameMap)){
                 pacman.charSprite.setPosition(align(posx(pacman)),posy(pacman) - deltaTime * speed);
@@ -137,7 +127,13 @@ int main()
                 pacman.dir = Pacman::States::STILL;
             }
         }else if(pacman.dir == Pacman::States::LEFT){
-            if(empty((int)(posx(pacman) - deltaTime * speed),(int)posy(pacman), gameMap)){
+            if(posx(pacman) - deltaTime * speed < 0){
+                pacman.charSprite.move(28 * 16, 0);
+            }
+            if(posx(pacman) > 27 * 16){
+                pacman.charSprite.move(-deltaTime * speed, 0);
+                pacman.dupe.setPosition(posx(pacman) - 28 * 16, 17 * 16);
+            }else if(empty((int)(posx(pacman) - deltaTime * speed),(int)posy(pacman), gameMap)){
                 pacman.charSprite.setPosition(posx(pacman) - deltaTime * speed,align(posy(pacman)));
             }else{
                 pacman.charSprite.setPosition((int)posx(pacman)/16 * 16, align(posy(pacman)));
@@ -151,7 +147,13 @@ int main()
                 pacman.dir = Pacman::States::STILL;
             }
         }else if(pacman.dir == Pacman::States::RIGHT){
-            if(empty((int)(posx(pacman) + 16 + deltaTime * speed),(int)posy(pacman), gameMap)){
+            if(posx(pacman) + deltaTime * speed > 27 * 16){
+                pacman.charSprite.move(-28 * 16, 0);
+            }
+            if(posx(pacman) < 0){
+                pacman.charSprite.move(deltaTime * speed, 0);
+                pacman.dupe.setPosition(posx(pacman) + 28 * 16, 17 * 16);
+            }else if(empty((int)(posx(pacman) + 16 + deltaTime * speed),(int)posy(pacman), gameMap)){
                 pacman.charSprite.setPosition(posx(pacman) + deltaTime * speed,align(posy(pacman)));
             }else{
                 pacman.charSprite.setPosition(align(posx(pacman)), align(posy(pacman)));

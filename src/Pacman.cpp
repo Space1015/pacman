@@ -5,7 +5,9 @@ Pacman::Pacman() : dir(States::STILL) { // Use member initializer list
         return;
     }
     charSprite.setTexture(charTexture);
+    dupe.setTexture(charTexture);
     charSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
+    dupe.setTextureRect(sf::IntRect(0, 0, 16, 16));
     charSprite.setPosition(216, 320);
 }
 

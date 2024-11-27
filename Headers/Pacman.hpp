@@ -10,6 +10,7 @@ class Pacman
     public:
         Pacman();
         sf::Sprite charSprite;
+        sf::Sprite dupe;
         sf::Texture charTexture;
         enum class States{
             STILL,

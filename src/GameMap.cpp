@@ -44,4 +44,6 @@ GameMap::GameMap(){
 void GameMap::displayMap(sf::RenderWindow& window, Pacman pacman){
     window.draw(mapSprite);
     window.draw(pacman.charSprite);
+    pacman.dupe.setTexture(*pacman.charSprite.getTexture());
+    window.draw(pacman.dupe);
 }

@@ -3,7 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <filesystem>
-#include <Pacman.hpp>
 
 using namespace std;
 class GameMap
@@ -12,6 +11,6 @@ class GameMap
         GameMap();
         sf::Sprite mapSprite;
         sf::Texture mapTexture;
-        void displayMap(sf::RenderWindow& window, Pacman pacman);
+        void displayMap(sf::RenderWindow& window, sf::Sprite charSprite, sf::Sprite dupe);
         vector<string> mapData;
 };

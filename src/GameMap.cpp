@@ -41,9 +41,9 @@ GameMap::GameMap(){
     mapTexture.loadFromFile("Resources/gamemap.png");
     mapSprite.setTexture(mapTexture);
 }
-void GameMap::displayMap(sf::RenderWindow& window, Pacman pacman){
+void GameMap::displayMap(sf::RenderWindow& window, sf::Sprite charSprite, sf::Sprite dupe){
     window.draw(mapSprite);
-    window.draw(pacman.charSprite);
-    pacman.dupe.setTexture(*pacman.charSprite.getTexture());
-    window.draw(pacman.dupe);
+    window.draw(charSprite);
+    dupe.setTexture(*charSprite.getTexture());
+    window.draw(dupe);
 }

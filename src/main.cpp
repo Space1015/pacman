@@ -72,11 +72,9 @@ int main()
         animation_timer += deltaTime;
         if (animation_timer >= ANIMATION_FRAME_DURATION) {
             animation_timer = 0.0f;
-            current_frame += (current_frame % 2) * -2 + 1;
-            sf::IntRect pacmanTextureRect(current_frame * 16, 0, 16, 16);
-            pacman.charSprite.setTextureRect(pacmanTextureRect);
-            pacman.dupe.setTextureRect(pacmanTextureRect);
+            current_frame += 1 + (current_frame % 2) * -2;
         }
+
         //check for game end
         for (auto event = sf::Event(); window.pollEvent(event);)
         {
@@ -89,31 +87,25 @@ int main()
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
             if(empty((int)posx(pacman) + 8,(int)posy(pacman) - (mod(posy(pacman)) == 0 ? 1: 0), gameMap) && abs(align(posx(pacman)) - posx(pacman)) < 2){
                 pacman.dir = Pacman::States::UP;
-                if(current_frame != 3) current_frame = 2;
             }
         }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
             if((int)posx(pacman) == 0){
                 pacman.dir = Pacman::States::LEFT;
-                if(current_frame != 1) current_frame = 0;
-            }if(empty((int)posx(pacman) - (mod(posx(pacman)) == 0 ? 1: 0),(int)posy(pacman) + 8, gameMap) && abs(align(posy(pacman)) - posy(pacman)) < 2){
+            }else if(empty((int)posx(pacman) - (mod(posx(pacman)) == 0 ? 1: 0),(int)posy(pacman) + 8, gameMap) && abs(align(posy(pacman)) - posy(pacman)) < 2){
                 pacman.dir = Pacman::States::LEFT;
-                if(current_frame != 1) current_frame = 0;
             }
         }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
             if(empty((int)posx(pacman) + 8,(int)posy(pacman) + 16 + (mod(posy(pacman)) == 0 ? 1: 0), gameMap) && abs(align(posx(pacman)) - posx(pacman)) < 2){
                 pacman.dir = Pacman::States::DOWN;
-                if(current_frame != 7)current_frame = 6;
             }
         }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
             if(posx(pacman) - 27 * 16 > 0){
                 pacman.dir = Pacman::States::RIGHT;
-                if(current_frame != 5) current_frame = 4;
             }else if(empty((int)posx(pacman) + 16 + (mod(posx(pacman)) == 0 ? 1: 0),(int)posy(pacman) + 8, gameMap) && abs(align(posy(pacman)) - posy(pacman)) < 2){
                 pacman.dir = Pacman::States::RIGHT;
-                if(current_frame != 5) current_frame = 4;
             }
         }
-        pacman.move(gameMap, deltaTime, speed, current_frame);
+        current_frame = pacman.move(gameMap, deltaTime, speed, current_frame);
         window.clear();
         gameMap.displayMap(window, pacman.charSprite, pacman.dupe);
         window.display();

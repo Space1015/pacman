@@ -27,10 +27,9 @@ double Pacman::mod(double x){
 double Pacman::align(double x) {
     return round(x / 16.0) * 16.0;
 }
-void Pacman::move(GameMap gameMap, double deltaTime, int speed, int current_frame){
-    sf::IntRect pacmanTextureRect(current_frame * 16, 0, 16, 16);
-    charSprite.setTextureRect(pacmanTextureRect);
+int Pacman::move(GameMap gameMap, double deltaTime, int speed, int current_frame){
     if (dir == Pacman::States::UP) {
+        if(current_frame != 3) current_frame = 2;
         if (empty((int)posx(), (int)(posy() - deltaTime * speed), gameMap)) {
             charSprite.setPosition(align(posx()), posy() - deltaTime * speed);
         } else {
@@ -38,6 +37,7 @@ void Pacman::move(GameMap gameMap, double deltaTime, int speed, int current_fram
             dir = Pacman::States::STILL;
         }
     } else if (dir == Pacman::States::LEFT) {
+        if(current_frame != 1) current_frame = 0;
         if (posx() - deltaTime * speed < 0) {
             charSprite.move(28 * 16, 0);
         }
@@ -51,6 +51,7 @@ void Pacman::move(GameMap gameMap, double deltaTime, int speed, int current_fram
             dir = Pacman::States::STILL;
         }
     } else if (dir == Pacman::States::DOWN) {
+        if(current_frame != 7)current_frame = 6;
         if (empty((int)posx(), (int)(posy() + 16 + deltaTime * speed), gameMap)) {
             charSprite.setPosition(align(posx()), posy() + deltaTime * speed);
         } else {
@@ -58,6 +59,7 @@ void Pacman::move(GameMap gameMap, double deltaTime, int speed, int current_fram
             dir = Pacman::States::STILL;
         }
     } else if (dir == Pacman::States::RIGHT) {
+        if(current_frame != 5) current_frame = 4;
         if (posx() + deltaTime * speed > 27 * 16) {
             charSprite.move(-28 * 16, 0);
         }
@@ -71,5 +73,9 @@ void Pacman::move(GameMap gameMap, double deltaTime, int speed, int current_fram
             dir = Pacman::States::STILL;
         }
     }
+    sf::IntRect pacmanTextureRect(current_frame * 16, 0, 16, 16);
+    charSprite.setTextureRect(pacmanTextureRect);
+    dupe.setTextureRect(pacmanTextureRect);
+    return current_frame;
 }
 

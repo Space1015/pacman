@@ -3,20 +3,30 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <filesystem>
-
+#include <Pacman.hpp>
+#include <GameMap.hpp>
 using namespace std;
 class Ghost
 {
     public:
-        Ghost(sf::Texture &texture);
-        sf::Sprite charSprite;
-        sf::Texture charTexture;
-        enum class States{
-            STILL,
+        enum class Type{
+            BLINKY,
+            INKY,
+            PINKY,
+            CLYDE
+        };
+        enum class Direction{
             UP,
             DOWN,
             LEFT,
             RIGHT
         };
-        States dir;
+        Direction dir;
+        Ghost(sf::Texture &texture, Type type);
+        sf::Sprite charSprite;
+        sf::Texture charTexture;
+        Type type;
+        int speed;
+        void followPath(double x, double y);
+        double align(double x);
 };

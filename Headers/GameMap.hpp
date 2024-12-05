@@ -11,6 +11,6 @@ class GameMap
         GameMap();
         sf::Sprite mapSprite;
         sf::Texture mapTexture;
-        void displayMap(sf::RenderWindow& window, sf::Sprite charSprite, sf::Sprite dupe);
+        void displayMap(sf::RenderWindow& window, sf::Sprite charSprite, sf::Sprite dupe, sf::Sprite blinky);
         vector<string> mapData;
 };

@@ -41,9 +41,10 @@ GameMap::GameMap(){
     mapTexture.loadFromFile("Resources/gamemap.png");
     mapSprite.setTexture(mapTexture);
 }
-void GameMap::displayMap(sf::RenderWindow& window, sf::Sprite charSprite, sf::Sprite dupe){
+void GameMap::displayMap(sf::RenderWindow& window, sf::Sprite charSprite, sf::Sprite dupe, sf::Sprite blinky){
     window.draw(mapSprite);
     window.draw(charSprite);
     dupe.setTexture(*charSprite.getTexture());
     window.draw(dupe);
+    window.draw(blinky);
 }

@@ -20,7 +20,8 @@ class Pacman
             RIGHT
         };
         States dir;
-        int move(GameMap GameMap, double deltaTime, int speed, int current_frame);
+        int speed;
+        int move(GameMap GameMap, double deltaTime, int current_frame, vector<bool> direction);
         double posx();
         double posy();
         double align(double x);

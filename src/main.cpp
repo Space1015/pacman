@@ -39,8 +39,9 @@ int main()
     GameMap gameMap;
     Pacman pacman;
     Ghost blinky(blinkyTexture, Ghost::Type::BLINKY);
-    blinky.charSprite.setPosition(216, 320-3*32);
-    blinky.dir = Ghost::Direction::LEFT;
+    blinky.dir = Ghost::Direction::UP;
+    //blinky.charSprite.setPosition(216, 320-3*32);
+    blinky.charSprite.setPosition(216, 304);
     //Ghost pinky(pinkyTexture, Ghost::Type::PINKY);
     //Ghost inky(inkyTexture, Ghost::Type::INKY);
     //Ghost clyde(clydeTexture, Ghost::Type::CLYDE);
@@ -48,7 +49,8 @@ int main()
 
     sf::Clock clock;
     sf::Time elapsed;
-
+    float elapsedTime = 0;
+    
     vector<bool> direction(4);
     float animation_timer = 0.0f;
     int current_frame = 0;
@@ -88,7 +90,7 @@ int main()
             direction[3] = true;
         }
         current_frame = pacman.move(gameMap, deltaTime, current_frame, direction);
-        //blinky.followPath(pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y);
+        blinky.followPath(pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y);
         direction = {false, false, false, false};
         window.clear();
         gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite);

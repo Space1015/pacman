@@ -27,6 +27,12 @@ class Ghost
         sf::Texture charTexture;
         Type type;
         int speed;
-        void followPath(double x, double y);
+        void followPath(GameMap gameMap, double x, double y, float deltaTime, float &elapsedTime);
         double align(double x);
+        double posx();
+        double posy();
+        double mod(double x);
+        char empty(int x, int y, GameMap gameMap);
+        void randomMove(GameMap gameMap);
+        void switchDir(GameMap gameMap, double x, double y, float elapsedTime);
 };

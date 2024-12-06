@@ -24,67 +24,94 @@ void Ghost::followPath(GameMap gameMap, double x, double y, float deltaTime, flo
     //moves in current direction
     //if encounters a wall, find the new direction (cannot go in opposite direction)
 
-    // elapsedTime += deltaTime;
-    // if (elapsedTime > 10 + rand() % 10) {
-    //     switchDir(gameMap, x, y);
-    //     elapsedTime = 0;
-    // }
-    switchDir(gameMap, x, y);
+    elapsedTime += deltaTime;
+    switchDir(gameMap, x, y, elapsedTime);
     //note: basic game down but still need to add the power up pellet with the ghost animation sequence where pacman can be eaten
     // although basic game isn't down until the eating dots code evelyn writes
     if (dir == Ghost::Direction::UP) {
         charSprite.setPosition(align(posx()), posy() - deltaTime * speed);
     } else if (dir == Ghost::Direction::LEFT) {
-        charSprite.setPosition(align(posx()), posy() + deltaTime * speed);
+        charSprite.setPosition(align(posx() + deltaTime * speed), posy());
     } else if (dir == Ghost::Direction::RIGHT) {
         charSprite.setPosition(posx() + deltaTime * speed, align(posy()));
     } else if (dir == Ghost::Direction::DOWN) {
         charSprite.setPosition(align(posx()), posy() + deltaTime * speed);
     }
 }
+/**
+ *  @param GameMap gameMap
+ *  @return void 
+ *  randomly choose a direction, move in that direction
+ */
 void Ghost::randomMove(GameMap gameMap) {
-    //randomly choose a direction
-    //move in that direction
-    bool foundViableDir = false;
-    while (!foundViableDir) {
-        int random = rand() % 4;
-        if (random == 0 && empty((int)posx()+8, (int)posy() - 16  - (mod(posy()) == 0 ? 1: 0), gameMap) && abs(align(posx()) - posx()) < 2) {
-            dir = Direction::UP;
-            foundViableDir = true;
-        } else if (random == 1 && empty((int)posx()+8, (int)posy() + 16  + (mod(posy()) == 0 ? 1: 0), gameMap) && abs(align(posx()) - posx()) < 2) {
-            dir = Direction::DOWN;
-            foundViableDir = true;
-        } else if (random == 2 && empty((int)posx() - 16  - (mod(posx()) == 0 ? 1: 0), (int)posy()+8, gameMap) && abs(align(posy()) - posy()) < 2) {
-            dir = Direction::LEFT;
-            foundViableDir = true;
-        } else if (random == 3 && empty((int)posx() + 16 +(mod(posx()) == 0 ? 1: 0), (int)posy()+8, gameMap) && abs(align(posy()) - posy()) < 2) {
-            dir = Direction::RIGHT;
-            foundViableDir = true;
-        }
+    // bool foundViableDir = false;
+    // while (!foundViableDir) {
+    //     int random = rand() % 4;
+    //     if (random == 0 && empty((int)posx()+8, (int)posy() - 16  - (mod(posy()) == 0 ? 1: 0), gameMap) && abs(align(posx()) - posx()) < 2) {
+    //         dir = Direction::UP;
+    //         foundViableDir = true;
+    //     } else if (random == 1 && empty((int)posx()+8, (int)posy() + 16  + (mod(posy()) == 0 ? 1: 0), gameMap) && abs(align(posx()) - posx()) < 2) {
+    //         dir = Direction::DOWN;
+    //         foundViableDir = true;
+    //     } else if (random == 2 && empty((int)posx() - 16  - (mod(posx()) == 0 ? 1: 0), (int)posy()+8, gameMap) && abs(align(posy()) - posy()) < 2) {
+    //         dir = Direction::LEFT;
+    //         foundViableDir = true;
+    //     } else if (random == 3 && empty((int)posx() + 16 +(mod(posx()) == 0 ? 1: 0), (int)posy()+8, gameMap) && abs(align(posy()) - posy()) < 2) {
+    //         dir = Direction::RIGHT;
+    //         foundViableDir = true;
+    //     }
+    // }
+    if (empty((int)posx()+8, (int)posy() - 16  - (mod(posy()) == 0 ? 1: 0), gameMap) && abs(align(posx()) - posx()) < 2) {
+        dir = Direction::UP;
+    } else if (empty((int)posx()+8, (int)posy() + 16  + (mod(posy()) == 0 ? 1: 0), gameMap) && abs(align(posx()) - posx()) < 2) {
+        dir = Direction::DOWN;
+    } else if (empty((int)posx() - 16  - (mod(posx()) == 0 ? 1: 0), (int)posy()+8, gameMap) && abs(align(posy()) - posy()) < 2) {
+        dir = Direction::LEFT;
+    } else if (empty((int)posx() + 16 +(mod(posx()) == 0 ? 1: 0), (int)posy()+8, gameMap) && abs(align(posy()) - posy()) < 2) {
+        dir = Direction::RIGHT;
     }
 }
-void Ghost::switchDir(GameMap gameMap, double x, double y) {
+void Ghost::switchDir(GameMap gameMap, double x, double y, float elapsedTime) {
     bool deadEnd = true;
     if (dir == Direction::UP || dir == Direction::DOWN) {
-        if (empty((int)posx() - 16  - (mod(posx()) == 0 ? 1: 0), (int)posy()+8, gameMap) && abs(align(posy()) - posy()) < 2) {
+        if (posx() >= x ) {
+            if (empty((int)posx() - 16  - (mod(posx()) == 0 ? 1: 0), (int)posy()+8, gameMap) && abs(align(posy()) - posy()) < 2) {
                 dir = Direction::LEFT;
                 deadEnd = false;
-            
-        } else if (posx() > x) {
+            }
+        } else if (posx() < x) {
             if (empty((int)posx() + 16 +(mod(posx()) == 0 ? 1: 0), (int)posy()+8, gameMap) && abs(align(posy()) - posy()) < 2) {
                 dir = Direction::RIGHT;
                 deadEnd = false;
             }
         }
-    } else {
-        if (posy() > y) {
+    } else if (dir == Direction::LEFT || dir == Direction::RIGHT) {
+        if (posy() <= y) {
             if (empty((int)posx()+8, (int)posy() - 16  - (mod(posy()) == 0 ? 1: 0), gameMap) && abs(align(posx()) - posx()) < 2) {
                 dir = Direction::UP;
                 deadEnd = false;
             }
-        } else if (posy() < y) {
+        } else if (posy() > y) {
             if (empty((int)posx()+8, (int)posy() + 16  + (mod(posy()) == 0 ? 1: 0), gameMap) && abs(align(posx()) - posx()) < 2) {
                 dir = Direction::DOWN;
+                deadEnd = false;
+            }
+        }
+    } else {
+        if (dir == Ghost::Direction::UP) {
+            if (empty((int)posx()+8, (int)posy() - 16  - (mod(posy()) == 0 ? 1: 0), gameMap) && abs(align(posx()) - posx()) < 2) {
+                deadEnd = false;
+            }
+        } else if (dir == Ghost::Direction::LEFT) {
+            if (empty((int)posx() - 16  - (mod(posx()) == 0 ? 1: 0), (int)posy()+8, gameMap) && abs(align(posy()) - posy()) < 2) {
+                deadEnd = false;
+            }
+        } else if (dir == Ghost::Direction::RIGHT) {
+            if (empty((int)posx() + 16 +(mod(posx()) == 0 ? 1: 0), (int)posy()+8, gameMap) && abs(align(posy()) - posy()) < 2) {
+                deadEnd = false;
+            }
+        } else if (dir == Ghost::Direction::DOWN) {
+            if (empty((int)posx()+8, (int)posy() + 16  + (mod(posy()) == 0 ? 1: 0), gameMap) && abs(align(posx()) - posx()) < 2) {
                 deadEnd = false;
             }
         }

@@ -34,5 +34,5 @@ class Ghost
         double mod(double x);
         char empty(int x, int y, GameMap gameMap);
         void randomMove(GameMap gameMap);
-        void switchDir(GameMap gameMap, double x, double y);
+        void switchDir(GameMap gameMap, double x, double y, float elapsedTime);
 };

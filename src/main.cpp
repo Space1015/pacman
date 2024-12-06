@@ -39,9 +39,9 @@ int main()
     GameMap gameMap;
     Pacman pacman;
     Ghost blinky(blinkyTexture, Ghost::Type::BLINKY);
+    blinky.dir = Ghost::Direction::UP;
     //blinky.charSprite.setPosition(216, 320-3*32);
     blinky.charSprite.setPosition(216, 304);
-    blinky.dir = Ghost::Direction::LEFT;
     //Ghost pinky(pinkyTexture, Ghost::Type::PINKY);
     //Ghost inky(inkyTexture, Ghost::Type::INKY);
     //Ghost clyde(clydeTexture, Ghost::Type::CLYDE);

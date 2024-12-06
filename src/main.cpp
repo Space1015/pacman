@@ -88,7 +88,7 @@ int main()
             direction[3] = true;
         }
         current_frame = pacman.move(gameMap, deltaTime, current_frame, direction);
-        blinky.followPath(pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y);
+        //blinky.followPath(pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y);
         direction = {false, false, false, false};
         window.clear();
         gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite);

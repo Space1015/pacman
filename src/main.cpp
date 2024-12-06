@@ -49,7 +49,8 @@ int main()
 
     sf::Clock clock;
     sf::Time elapsed;
-
+    float elapsedTime = 0;
+    
     vector<bool> direction(4);
     float animation_timer = 0.0f;
     int current_frame = 0;
@@ -89,7 +90,7 @@ int main()
             direction[3] = true;
         }
         current_frame = pacman.move(gameMap, deltaTime, current_frame, direction);
-        blinky.followPath(gameMap, pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y, deltaTime);
+        blinky.followPath(gameMap, pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y, deltaTime, elapsedTime);
         direction = {false, false, false, false};
         window.clear();
         gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite);

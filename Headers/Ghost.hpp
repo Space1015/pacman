@@ -19,7 +19,8 @@ class Ghost
             UP,
             DOWN,
             LEFT,
-            RIGHT
+            RIGHT,
+            STILL
         };
         Direction dir;
         Ghost(sf::Texture &texture, Type type);
@@ -27,12 +28,7 @@ class Ghost
         sf::Texture charTexture;
         Type type;
         int speed;
-        void followPath(GameMap gameMap, double x, double y, float deltaTime, float &elapsedTime);
+        void followPath(GameMap gameMap, double x, double px, double y, double py, double deltaTime);
         double align(double x);
-        double posx();
-        double posy();
-        double mod(double x);
-        char empty(int x, int y, GameMap gameMap);
-        void randomMove(GameMap gameMap);
-        void switchDir(GameMap gameMap, double x, double y, float elapsedTime);
+        bool empty(int x, int y, GameMap gameMap);
 };

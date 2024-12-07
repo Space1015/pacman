@@ -26,5 +26,5 @@ class Pacman
         double posy();
         double align(double x);
         double mod(double x);
-        char empty(int x, int y, GameMap gameMap);
+        bool empty(int x, int y, GameMap gameMap);
 };

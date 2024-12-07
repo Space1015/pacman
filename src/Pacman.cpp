@@ -18,7 +18,7 @@ double Pacman::posx(){
 double Pacman::posy(){
     return charSprite.getPosition().y;
 }
-char Pacman::empty(int x, int y, GameMap gameMap){
+bool Pacman::empty(int x, int y, GameMap gameMap){
     x /= 16; y /= 16;
     return gameMap.mapData[y][x] == ' ';
 }

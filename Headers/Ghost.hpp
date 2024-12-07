@@ -4,7 +4,7 @@
 #include <iostream>
 #include <filesystem>
 #include <Pacman.hpp>
-#include <GameMap.hpp>
+#include <Global.hpp>
 using namespace std;
 class Ghost
 {

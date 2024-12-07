@@ -1,19 +1,20 @@
 
-#include "Ghost.hpp"
+#include <Ghost.hpp>
 Ghost::Ghost(sf::Texture &texture, Type type) { // Use member initializer list
     charSprite.setTexture(texture);
     charSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
     speed = 99;
 }
-double Ghost::align(double x) {
-    return round(x / 16.0) * 16.0;
-}
 bool Ghost::empty(int x, int y, GameMap gameMap){
     x /= 16; y /= 16;
     return gameMap.mapData[y][x] == ' ';
 }
+double Ghost::align(double x) {
+    return round(x / 16.0) * 16.0;
+}
 void Ghost::followPath(GameMap gameMap, double x, double px, double y, double py, double deltaTime){
     if(dir == Direction::STILL){
+        
         if(empty(x, y - 16, gameMap) && py < y){
             dir = Direction::UP;
         }else if(empty(x - 16, y, gameMap) && px < x){

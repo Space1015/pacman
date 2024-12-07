@@ -1,8 +1,4 @@
-#ifndef PELLET_H
-#define PELLET_H
-
 #pragma once
-
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <filesystem>
@@ -37,5 +33,3 @@ public:
 
     void eat();
 };
-
-#endif // PELLET_H

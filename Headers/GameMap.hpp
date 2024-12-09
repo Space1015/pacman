@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <filesystem>
+#include <cmath>
 
 using namespace std;
 class GameMap

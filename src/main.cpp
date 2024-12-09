@@ -52,7 +52,6 @@ int main()
     float animation_timer = 0.0f;
     int current_frame = 0;
     const int TOTAL_FRAMES = 8;
-    
     while (window.isOpen())
     {
         //pacman animation
@@ -87,7 +86,7 @@ int main()
             direction[3] = true;
         }
         current_frame = pacman.move(gameMap, deltaTime, current_frame, direction);
-        blinky.followPath(gameMap, blinky.charSprite.getPosition().x, pacman.charSprite.getPosition().x, blinky.charSprite.getPosition().y, pacman.charSprite.getPosition().y, deltaTime);
+        blinky.move(gameMap, blinky.goToCoords(gameMap, pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y),deltaTime);
         direction = {false, false, false, false};
         window.clear();
         gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite);

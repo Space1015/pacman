@@ -4,7 +4,7 @@ bool empty(int x, int y, GameMap gameMap){
     x /= 16; y /= 16;
     return gameMap.mapData[y][x] == ' ';
 }
-bool empty(int x, int y, GameMap gameMap){
+bool iempty(int x, int y, GameMap gameMap){
     return gameMap.mapData[y][x] == ' ';
 }
 double mod(double x){

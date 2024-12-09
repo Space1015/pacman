@@ -35,5 +35,5 @@ class Ghost
         int speed;
         void followPath(GameMap gameMap, double x, double px, double y, double py, double deltaTime);
         pair<int, int> goToCoords(GameMap gameMap, double x, double y);
-        void move(GameMap gameMap, pair<int, int>, double deltaTime);
+        void move(GameMap gameMap, pair<int, int> s, double deltaTime);
 };

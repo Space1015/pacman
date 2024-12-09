@@ -22,6 +22,11 @@ class Ghost
             RIGHT,
             STILL
         };
+        enum class State{
+            NORMAL,
+            SCATTER,
+            FRIGHTENED
+        };
         Direction dir;
         Ghost(sf::Texture &texture, Type type);
         sf::Sprite charSprite;
@@ -29,6 +34,6 @@ class Ghost
         Type type;
         int speed;
         void followPath(GameMap gameMap, double x, double px, double y, double py, double deltaTime);
-        double align(double x);
-        bool empty(int x, int y, GameMap gameMap);
+        pair<int, int> goToCoords(GameMap gameMap, double x, double y);
+        void move(GameMap gameMap, pair<int, int>, double deltaTime);
 };

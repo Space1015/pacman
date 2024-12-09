@@ -7,4 +7,5 @@
 
 double align(double x);
 double mod(double x);
-bool empty(int x, int y, GameMap gameMap);  
+bool empty(int x, int y, GameMap gameMap); 
+bool iempty(int x, int y, GameMap gameMap);   

@@ -54,27 +54,27 @@ pair<int, int> Ghost::goToCoords(GameMap gameMap, double px, double py){
 void Ghost::move(GameMap gameMap, pair<int, int> s, double deltaTime){
     if(charSprite.getPosition().x == s.second){
         if(charSprite.getPosition().y < s.first){
-            charSprite.setPosition(charSprite.getPosition().x, max((double)s.first, charSprite.getPosition().y + deltaTime * speed));
+            charSprite.setPosition(charSprite.getPosition().x, min((double)s.first, charSprite.getPosition().y + deltaTime * speed));
         }else{
-            charSprite.setPosition(charSprite.getPosition().x, min((double)s.first, charSprite.getPosition().y - deltaTime * speed));
+            charSprite.setPosition(charSprite.getPosition().x, max((double)s.first, charSprite.getPosition().y - deltaTime * speed));
         }
     }else if(charSprite.getPosition().x == s.second){
         if(charSprite.getPosition().x < s.second){
-            charSprite.setPosition(max((double)s.second, charSprite.getPosition().x + deltaTime * speed), charSprite.getPosition().y);
+            charSprite.setPosition(min((double)s.second, charSprite.getPosition().x + deltaTime * speed), charSprite.getPosition().y);
         }else{
-            charSprite.setPosition(min((double)s.second, charSprite.getPosition().x - deltaTime * speed), charSprite.getPosition().y);
+            charSprite.setPosition(max((double)s.second, charSprite.getPosition().x - deltaTime * speed), charSprite.getPosition().y);
         }
     }else if(abs(s.second - charSprite.getPosition().x) > abs(s.first - charSprite.getPosition().y)){
         if(charSprite.getPosition().x < s.second){
-            charSprite.setPosition(max((double)s.second, charSprite.getPosition().x + deltaTime * speed), charSprite.getPosition().y);
+            charSprite.setPosition(min((double)s.second, charSprite.getPosition().x + deltaTime * speed), charSprite.getPosition().y);
         }else{
-            charSprite.setPosition(min((double)s.second, charSprite.getPosition().x - deltaTime * speed), charSprite.getPosition().y);
+            charSprite.setPosition(max((double)s.second, charSprite.getPosition().x - deltaTime * speed), charSprite.getPosition().y);
         }
     }else{
         if(charSprite.getPosition().y < s.first){
-            charSprite.setPosition(charSprite.getPosition().x, max((double)s.first, charSprite.getPosition().y + deltaTime * speed));
+            charSprite.setPosition(charSprite.getPosition().x, min((double)s.first, charSprite.getPosition().y + deltaTime * speed));
         }else{
-            charSprite.setPosition(charSprite.getPosition().x, min((double)s.first, charSprite.getPosition().y - deltaTime * speed));
+            charSprite.setPosition(charSprite.getPosition().x, max((double)s.first, charSprite.getPosition().y - deltaTime * speed));
         }
     }
 }

@@ -14,16 +14,16 @@ pair<int, int> Ghost::goToCoords(GameMap gameMap, double px, double py){
     pair<int, int> prev[36][28];
     for (int i = 0; i < 36; i++) {
         for (int j = 0; j < 28; j++) {
-            visited[i][j] = false;
+            visited[i][j] = false; //defaults to false no neeed to initialize? or no
         }
     }
     visited[y][x] = true;
     prev[y][x] = {y,x};
     q.push({y,x});
-    while(!q.empty()){
+    while(!q.empty()){ //your function works by calling goToCoords() once in the whole game, but main calls it every frame --> laggy. the while loop is in main alr, move arrays to main too
         pair<int, int> s = q.front(); q.pop();
         if(s.first == py && s.second == px){ //if at pacman
-            while(prev[s.first][s.second] != prev[prev[s.first][s.second].first][prev[s.first][s.second].second]){
+            while(prev[s.first][s.second] != prev[prev[s.first][s.second].first][prev[s.first][s.second].second]){ //if or while
                 s = prev[s.first][s.second];
             }
             return {s.first * 16, s.second * 16};
@@ -52,7 +52,7 @@ pair<int, int> Ghost::goToCoords(GameMap gameMap, double px, double py){
     return {0,0};
 }
 void Ghost::move(GameMap gameMap, pair<int, int> s, double deltaTime){
-    if(charSprite.getPosition().x == s.second){
+    if(charSprite.getPosition().x == s.second){ //can optimize later
         if(charSprite.getPosition().y < s.first){
             charSprite.setPosition(charSprite.getPosition().x, min((double)s.first, charSprite.getPosition().y + deltaTime * speed));
         }else{

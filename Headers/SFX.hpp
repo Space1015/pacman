@@ -4,7 +4,8 @@
 
 using namespace std;
 
-class SFX {
+class SFX 
+{
     enum class State{
         START,
         END,

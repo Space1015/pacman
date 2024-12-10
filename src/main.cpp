@@ -1,9 +1,12 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <filesystem>
 #include <iostream>
 #include <GameMap.hpp>
 #include <Pacman.hpp>
 #include <Ghost.hpp>
+#include <SFX.hpp>
+
 using namespace std;
 #define kP(x) sf::Keyboard::isKeyPressed(x)
 int main()
@@ -36,6 +39,11 @@ int main()
         return -1;
     }
 
+    sf::Sound sound;
+    sound.setVolume(30.f);
+    SFX playlist;
+    playlist.intro.play();
+
     GameMap gameMap;
     Pacman pacman;
     Ghost blinky(blinkyTexture, Ghost::Type::BLINKY);
@@ -63,13 +71,21 @@ int main()
             animation_timer = 0.0f;
             current_frame += 1 + (current_frame % 2) * -2;
         }
-        //check for game end
+        
         for (auto event = sf::Event(); window.pollEvent(event);)
         {
             if (event.type == sf::Event::Closed)
             {
                 window.close();
             }
+        }
+        window.clear();
+        gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite);
+        window.display();
+
+        //wait for start music to finish
+        while (playlist.intro.getStatus()==sf::Music::Playing) {
+            sf::sleep(sf::milliseconds(1000));
         }
         //pacman keyboard control movement and animation
         if(kP(sf::Keyboard::W) || kP(sf::Keyboard::Up))
@@ -88,8 +104,5 @@ int main()
         current_frame = pacman.move(gameMap, deltaTime, current_frame, direction);
         blinky.move(gameMap, blinky.goToCoords(gameMap, pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y),deltaTime);
         direction = {false, false, false, false};
-        window.clear();
-        gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite);
-        window.display();
     }
 }

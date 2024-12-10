@@ -33,7 +33,6 @@ class Ghost
         sf::Texture charTexture;
         Type type;
         int speed;
-        void followPath(GameMap gameMap, double x, double px, double y, double py, double deltaTime);
         pair<int, int> goToCoords(GameMap gameMap, double x, double y);
         void move(GameMap gameMap, pair<int, int> s, double deltaTime);
 };

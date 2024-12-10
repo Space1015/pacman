@@ -12,7 +12,7 @@ using namespace std;
 int main()
 {
     auto window = sf::RenderWindow({448u, 576u}, "Pacman");
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(50);
 
     sf::Texture clydeTexture;
     clydeTexture.loadFromFile("Resources/clyde.png");
@@ -59,12 +59,14 @@ int main()
     float animation_timer = 0.0f;
     int current_frame = 0;
     const int TOTAL_FRAMES = 8;
-    int subs = 0;
-    while (window.isOpen() && subs < 1)
+    gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite);
+    window.display();
+    while (window.isOpen())
     {
         //pacman animation
         pacman.dupe.setPosition(-100,-100);
         float deltaTime = clock.restart().asSeconds();
+        deltaTime = 0.020;
         animation_timer += deltaTime;
         if (animation_timer >= ANIMATION_FRAME_DURATION) 
         {
@@ -79,9 +81,6 @@ int main()
                 window.close();
             }
         }
-        window.clear();
-        gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite);
-        window.display();
 
         //wait for start music to finish
         while (playlist.intro.getStatus()==sf::Music::Playing) {
@@ -104,5 +103,8 @@ int main()
         current_frame = pacman.move(gameMap, deltaTime, current_frame, direction);
         blinky.move(gameMap, blinky.goToCoords(gameMap, pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y),deltaTime);
         direction = {false, false, false, false};
+        window.clear();
+        gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite);
+        window.display();
     }
 }

@@ -9,11 +9,12 @@ pair<int, int> Ghost::goToCoords(GameMap gameMap, double px, double py){
     px = (int)(px/16); py = (int)(py/16);
     int x = charSprite.getPosition().x/16;
     int y = charSprite.getPosition().y/16;
+    int distance = pow(px - x, 2) + pow(py - y, 2);
     queue<pair<int, int>> q;
     bool visited [36][28];
     pair<int, int> prev[36][28];
-    for (int i = 0; i < 36; i++) {
-        for (int j = 0; j < 28; j++) {
+    for (int i = 0; i < 36; i++){
+        for (int j = 0; j < 28; j++){
             visited[i][j] = false;
         }
     }
@@ -22,12 +23,14 @@ pair<int, int> Ghost::goToCoords(GameMap gameMap, double px, double py){
     q.push({y,x});
     while(!q.empty()){
         pair<int, int> s = q.front(); q.pop();
+        int d2 = pow(s.first - py,2) + pow(s.second - px, 2);
         if(s.first == py && s.second == px){ //if at pacman
             while(prev[s.first][s.second] != prev[prev[s.first][s.second].first][prev[s.first][s.second].second]){
                 s = prev[s.first][s.second];
             }
             return {s.first * 16, s.second * 16};
         }
+        if(d2 - distance > 30) continue;
         if(iempty(s.second, s.first - 1, gameMap) && !visited[s.first - 1][s.second]){
             visited[s.first - 1][s.second] = true;
             prev[s.first - 1][s.second] = s;

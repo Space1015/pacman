@@ -11,6 +11,7 @@ Pacman::Pacman() : dir(States::STILL) { // Use member initializer list
     charSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
     dupe.setTextureRect(sf::IntRect(0, 0, 16, 16));
     charSprite.setPosition(216, 320);
+    dupe.setPosition(-100,-100);
 }
 double Pacman::posx(){
     return charSprite.getPosition().x;

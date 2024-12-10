@@ -12,7 +12,7 @@ using namespace std;
 int main()
 {
     auto window = sf::RenderWindow({448u, 576u}, "Pacman");
-    window.setFramerateLimit(50);
+    window.setFramerateLimit(60);
 
     sf::Texture clydeTexture;
     clydeTexture.loadFromFile("Resources/clyde.png");
@@ -66,7 +66,6 @@ int main()
         //pacman animation
         pacman.dupe.setPosition(-100,-100);
         float deltaTime = clock.restart().asSeconds();
-        deltaTime = 0.020;
         animation_timer += deltaTime;
         if (animation_timer >= ANIMATION_FRAME_DURATION) 
         {

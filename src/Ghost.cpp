@@ -3,7 +3,7 @@
 Ghost::Ghost(sf::Texture &texture, Type type) { // Use member initializer list
     charSprite.setTexture(texture);
     charSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
-    speed = 90;
+    speed = 99;
 }
 pair<int, int> Ghost::goToCoords(GameMap gameMap, double px, double py){
     px = (int)(px/16); py = (int)(py/16);

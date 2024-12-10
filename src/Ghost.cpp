@@ -3,7 +3,7 @@
 Ghost::Ghost(sf::Texture &texture, Type type) { // Use member initializer list
     charSprite.setTexture(texture);
     charSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
-    speed = 99;
+    speed = 90;
 }
 pair<int, int> Ghost::goToCoords(GameMap gameMap, double px, double py){
     px = (int)(px/16); py = (int)(py/16);
@@ -59,7 +59,11 @@ void Ghost::move(GameMap gameMap, pair<int, int> s, double deltaTime){
             charSprite.setPosition(charSprite.getPosition().x, max((double)s.first, charSprite.getPosition().y - deltaTime * speed));
         }
     }else if(charSprite.getPosition().y == s.first){
-        if(charSprite.getPosition().x < s.second){
+        if(charSprite.getPosition().x < s.second && s.second - charSprite.getPosition().x > 200){
+            charSprite.setPosition(min((double)s.second, fmod((charSprite.getPosition().x - deltaTime * speed + 28*16),28*16)), charSprite.getPosition().y);
+        }else if(charSprite.getPosition().x > s.second && charSprite.getPosition().x - s.second > 200){
+            charSprite.setPosition(min((double)s.second, fmod(charSprite.getPosition().x + deltaTime * speed,28*16)), charSprite.getPosition().y);
+        }else if(charSprite.getPosition().x < s.second){
             charSprite.setPosition(min((double)s.second, charSprite.getPosition().x + deltaTime * speed), charSprite.getPosition().y);
         }else{
             charSprite.setPosition(max((double)s.second, charSprite.getPosition().x - deltaTime * speed), charSprite.getPosition().y);

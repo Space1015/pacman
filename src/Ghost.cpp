@@ -58,13 +58,13 @@ void Ghost::move(GameMap gameMap, pair<int, int> s, double deltaTime){
         }else{
             charSprite.setPosition(charSprite.getPosition().x, max((double)s.first, charSprite.getPosition().y - deltaTime * speed));
         }
-    }else if(charSprite.getPosition().x == s.second){
+    }else if(charSprite.getPosition().y == s.first){
         if(charSprite.getPosition().x < s.second){
             charSprite.setPosition(min((double)s.second, charSprite.getPosition().x + deltaTime * speed), charSprite.getPosition().y);
         }else{
             charSprite.setPosition(max((double)s.second, charSprite.getPosition().x - deltaTime * speed), charSprite.getPosition().y);
         }
-    }else if(abs(s.second - charSprite.getPosition().x) > abs(s.first - charSprite.getPosition().y)){
+    }else if(abs(s.second - charSprite.getPosition().x) < abs(s.first - charSprite.getPosition().y)){
         if(charSprite.getPosition().x < s.second){
             charSprite.setPosition(min((double)s.second, charSprite.getPosition().x + deltaTime * speed), charSprite.getPosition().y);
         }else{

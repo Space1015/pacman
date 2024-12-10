@@ -40,7 +40,6 @@ int main()
     Pacman pacman;
     Ghost blinky(blinkyTexture, Ghost::Type::BLINKY);
     blinky.dir = Ghost::Direction::LEFT;
-    blinky.charSprite.setPosition(216, 320-3*32);
     blinky.charSprite.setPosition(216, 224);
     const float ANIMATION_FRAME_DURATION = 0.1f;
 
@@ -52,7 +51,8 @@ int main()
     float animation_timer = 0.0f;
     int current_frame = 0;
     const int TOTAL_FRAMES = 8;
-    while (window.isOpen())
+    int subs = 0;
+    while (window.isOpen() && subs < 1)
     {
         //pacman animation
         pacman.dupe.setPosition(-100,-100);

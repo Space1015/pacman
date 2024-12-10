@@ -13,14 +13,14 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp src/GameMap.cpp src/Global.cpp src/Pacman.cpp src/Ghost.cpp src/Global.cpp)
+add_executable(main src/main.cpp src/GameMap.cpp src/Global.cpp src/Pacman.cpp src/Ghost.cpp src/Global.cpp src/Pellet.cpp src/SFX.cpp)
 
 
 target_include_directories(main PRIVATE ${CMAKE_SOURCE_DIR}/Headers)
 target_link_libraries(main PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 target_compile_features(main PRIVATE cxx_std_17)
 
-file(COPY ${CMAKE_SOURCE_DIR}/Resources 
+file(COPY ${CMAKE_SOURCE_DIR}/Resources
      DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 if(WIN32)

@@ -15,24 +15,18 @@ class Ghost
             PINKY,
             CLYDE
         };
-        enum class Direction{
-            UP,
-            DOWN,
-            LEFT,
-            RIGHT,
-            STILL
-        };
         enum class State{
             NORMAL,
             SCATTER,
             FRIGHTENED
         };
-        Direction dir;
+        State state;
         Ghost(sf::Texture &texture, Type type);
         sf::Sprite charSprite;
         sf::Texture charTexture;
         Type type;
         int speed;
+        double timer;
         pair<int, int> goToCoords(GameMap gameMap, double x, double y);
         void move(GameMap gameMap, pair<int, int> s, double deltaTime);
 };

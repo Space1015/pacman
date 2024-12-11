@@ -27,11 +27,12 @@ int main()
     sf::Sound sound;
     sf::Text text;
     sf::Font font;
-    font.loadFromFile("Resources/pacman.ttf");
+    //font.loadFromFile("Resources/pacman.ttf");
     text.setPosition(0,0);
     text.setCharacterSize(16);
+
     text.setFillColor(sf::Color::White);
-    text.setFont(font);
+    //text.setFont(font);
     sound.setVolume(30.f);
     SFX playlist;
     playlist.intro.play();
@@ -40,7 +41,6 @@ int main()
     Pacman pacman;
     PelletManager pellet(gameMap);
     Ghost blinky(blinkyTexture, Ghost::Type::BLINKY);
-    blinky.dir = Ghost::Direction::LEFT;
     blinky.charSprite.setPosition(216, 224);
     const float ANIMATION_FRAME_DURATION = 0.1f;
 
@@ -48,6 +48,8 @@ int main()
     sf::Time elapsed;
     float elapsedTime = 0;
     
+    text.setString(to_string(pellet.score));
+
     vector<bool> direction(4);
     float animation_timer = 0.0f;
     int current_frame = 0;
@@ -99,20 +101,33 @@ int main()
         current_frame = pacman.move(gameMap, deltaTime, current_frame, direction);
         pellet.score += pellet.addScore(pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y);
         text.setString(to_string(pellet.score));
-        blinky.move(gameMap, blinky.goToCoords(gameMap, pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y),deltaTime);
-        if(blinky.charSprite.getGlobalBounds().intersects(pacman.charSprite.getGlobalBounds())){
-            playlist.siren.stop();
-            playlist.death.play();
-            while (playlist.death.getStatus() == sf::Sound::Playing) {
-                sf::sleep(sf::milliseconds(100));
+        if(blinky.state == Ghost::State::SCATTER){
+            blinky.move(gameMap, blinky.goToCoords(gameMap, 16, 64),deltaTime);
+            blinky.timer -= deltaTime;
+            if((blinky.charSprite.getPosition().x == 16 && blinky.charSprite.getPosition().y == 64) || blinky.timer <= 0){
+                blinky.timer = 20;
+                blinky.state = Ghost::State::NORMAL;
             }
-            sf::sleep(sf::milliseconds(1000));
-            break; 
+        }else if(blinky.state == Ghost::State::NORMAL){
+            blinky.move(gameMap, blinky.goToCoords(gameMap, pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y),deltaTime);
+            blinky.timer -= deltaTime;
+            if(blinky.timer <= 0){
+                blinky.timer = 10;
+                blinky.state = Ghost::State::SCATTER;
+            }
         }
-
         direction = {false, false, false, false};
         window.clear();
         gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite, pellet.pelletMap, pellet.charSprite, text);
         window.display();
+        if(blinky.charSprite.getGlobalBounds().intersects(pacman.charSprite.getGlobalBounds())){
+            playlist.siren.stop();
+            playlist.death.play();
+            while (playlist.death.getStatus() == sf::Sound::Playing) {
+                sf::sleep(sf::milliseconds(10));
+            }
+            sf::sleep(sf::milliseconds(100));
+            break; 
+        }
     }
 }

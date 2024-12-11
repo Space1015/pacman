@@ -13,7 +13,7 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp src/GameMap.cpp src/Global.cpp src/Pacman.cpp src/Ghost.cpp src/Global.cpp src/Pellet.cpp src/SFX.cpp)
+add_executable(main src/main.cpp src/GameMap.cpp src/Global.cpp src/Pacman.cpp src/Ghost.cpp src/Global.cpp src/PelletManager.cpp src/SFX.cpp)
 
 
 target_include_directories(main PRIVATE ${CMAKE_SOURCE_DIR}/Headers)

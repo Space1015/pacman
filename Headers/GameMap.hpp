@@ -6,6 +6,7 @@
 #include <cmath>
 
 using namespace std;
+class PelletManager;
 class GameMap
 {
     public:

@@ -6,6 +6,7 @@
 #include <Pacman.hpp>
 #include <Ghost.hpp>
 #include <SFX.hpp>
+#include <PelletManager.hpp>
 
 using namespace std;
 #define kP(x) sf::Keyboard::isKeyPressed(x)
@@ -46,6 +47,7 @@ int main()
 
     GameMap gameMap;
     Pacman pacman;
+    PelletManager pellet(gameMap);
     Ghost blinky(blinkyTexture, Ghost::Type::BLINKY);
     blinky.dir = Ghost::Direction::LEFT;
     blinky.charSprite.setPosition(216, 224);
@@ -60,6 +62,7 @@ int main()
     int current_frame = 0;
     const int TOTAL_FRAMES = 8;
     gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite);
+    pellet.displayMap(window);
     window.display();
     while (window.isOpen())
     {
@@ -104,6 +107,7 @@ int main()
         direction = {false, false, false, false};
         window.clear();
         gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite);
+        pellet.displayMap(window);
         window.display();
     }
 }

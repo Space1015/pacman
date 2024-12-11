@@ -1,0 +1,23 @@
+#pragma once
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <filesystem>
+#include <GameMap.hpp>
+#include <utility>
+
+using namespace std;
+
+class PelletManager {
+    public:
+        PelletManager(GameMap gameMap);
+        sf::Sprite charSprite;
+        sf::Texture charTexture;
+        enum class PelletType {
+            REGULAR,
+            POWER,
+            NONE
+        };
+        PelletType pelletMap[36][28];
+        int score;
+        void displayMap(sf::RenderWindow& window);
+};

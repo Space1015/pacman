@@ -14,5 +14,7 @@ class PelletManager {
         sf::Texture charTexture;
         int pelletMap[36][28];
         int score;
+        int addScore(double x, double y);
+        
 
 };

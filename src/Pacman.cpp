@@ -1,5 +1,6 @@
 #include "Pacman.hpp"
 #include "GameMap.hpp"
+#include <PelletManager.hpp>
 Pacman::Pacman() : dir(States::STILL) { // Use member initializer list
     speed = 88;
     charTexture.loadFromFile("Resources/pacman.png");
@@ -101,5 +102,6 @@ int Pacman::move(GameMap gameMap, double deltaTime, int current_frame, vector<bo
     charSprite.setTextureRect(pacmanTextureRect);
     dupe.setTextureRect(pacmanTextureRect);
     return current_frame;
+
 }
 

@@ -90,17 +90,17 @@ int main()
             direction[3] = true;
         }
         current_frame = pacman.move(gameMap, deltaTime, current_frame, direction);
-
+        pellet.score += pellet.addScore(pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y);
         blinky.move(gameMap, blinky.goToCoords(gameMap, pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y),deltaTime);
-        if(blinky.charSprite.getGlobalBounds().intersects(pacman.charSprite.getGlobalBounds())){
-            playlist.siren.stop();
-            playlist.death.play();
-            while (playlist.death.getStatus() == sf::Sound::Playing) {
-                sf::sleep(sf::milliseconds(100));
-            }
-            sf::sleep(sf::milliseconds(1000));
-            break; 
-            }
+        // if(blinky.charSprite.getGlobalBounds().intersects(pacman.charSprite.getGlobalBounds())){
+        //     playlist.siren.stop();
+        //     playlist.death.play();
+        //     while (playlist.death.getStatus() == sf::Sound::Playing) {
+        //         sf::sleep(sf::milliseconds(100));
+        //     }
+        //     sf::sleep(sf::milliseconds(1000));
+        //     break; 
+        // }
 
         direction = {false, false, false, false};
         window.clear();

@@ -30,7 +30,7 @@ pair<int, int> Ghost::goToCoords(GameMap gameMap, double px, double py){
             }
             return {s.first * 16, s.second * 16};
         }
-        if(d2 - distance > 30) continue;
+        if(d2 - distance > 30 && y != 17) continue;
         if(iempty(s.second, s.first - 1, gameMap) && !visited[s.first - 1][s.second]){
             visited[s.first - 1][s.second] = true;
             prev[s.first - 1][s.second] = s;

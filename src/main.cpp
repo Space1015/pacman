@@ -17,28 +17,12 @@ int main()
 
     sf::Texture clydeTexture;
     clydeTexture.loadFromFile("Resources/clyde.png");
-    if (!clydeTexture.loadFromFile("Resources/clyde.png")) 
-    {
-        return -1;
-    }
     sf::Texture pinkyTexture;
     pinkyTexture.loadFromFile("Resources/pinky.png");
-    if (!pinkyTexture.loadFromFile("Resources/pinky.png")) 
-    {
-        return -1;
-    }
     sf::Texture inkyTexture;
     inkyTexture.loadFromFile("Resources/inky.png");
-    if (!inkyTexture.loadFromFile("Resources/inky.png"))
-    {
-        return -1;
-    }
     sf::Texture blinkyTexture;
     blinkyTexture.loadFromFile("Resources/blinky.png");
-    if (!blinkyTexture.loadFromFile("Resources/blinky.png")) 
-    {
-        return -1;
-    }
 
     sf::Sound sound;
     sound.setVolume(30.f);
@@ -61,9 +45,10 @@ int main()
     float animation_timer = 0.0f;
     int current_frame = 0;
     const int TOTAL_FRAMES = 8;
-    gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite);
-    pellet.displayMap(window);
+    gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite, pellet.pelletMap, pellet.charSprite);
     window.display();
+    playlist.siren.setLoop(true);
+    playlist.siren.play();
     while (window.isOpen())
     {
         //pacman animation
@@ -86,7 +71,9 @@ int main()
 
         //wait for start music to finish
         while (playlist.intro.getStatus()==sf::Music::Playing) {
-            sf::sleep(sf::milliseconds(1000));
+            playlist.siren.stop();
+            sf::sleep(sf::milliseconds(100));
+            playlist.siren.play();
         }
         //pacman keyboard control movement and animation
         if(kP(sf::Keyboard::W) || kP(sf::Keyboard::Up))
@@ -103,11 +90,21 @@ int main()
             direction[3] = true;
         }
         current_frame = pacman.move(gameMap, deltaTime, current_frame, direction);
+
         blinky.move(gameMap, blinky.goToCoords(gameMap, pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y),deltaTime);
+        if(blinky.charSprite.getGlobalBounds().intersects(pacman.charSprite.getGlobalBounds())){
+            playlist.siren.stop();
+            playlist.death.play();
+            while (playlist.death.getStatus() == sf::Sound::Playing) {
+                sf::sleep(sf::milliseconds(100));
+            }
+            sf::sleep(sf::milliseconds(1000));
+            break; 
+            }
+
         direction = {false, false, false, false};
         window.clear();
-        gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite);
-        pellet.displayMap(window);
+        gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite, pellet.pelletMap, pellet.charSprite);
         window.display();
     }
 }

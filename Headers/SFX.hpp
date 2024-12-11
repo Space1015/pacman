@@ -15,11 +15,11 @@ class SFX
         SFX();
     sf::Music intro;
     sf::Music end;
-    sf::SoundBuffer waka;
-    sf::SoundBuffer siren;
-    sf::SoundBuffer fruit;
-    sf::SoundBuffer ghostscared;
-    sf::SoundBuffer ghost2base;
-    sf::SoundBuffer death;
-    sf::SoundBuffer eatghost;
+    sf::Music waka;
+    sf::Music siren;
+    sf::Music fruit;
+    sf::Music ghostscared;
+    sf::Music ghost2base;
+    sf::Music death;
+    sf::Music eatghost;
 };

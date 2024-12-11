@@ -12,12 +12,7 @@ class PelletManager {
         PelletManager(GameMap gameMap);
         sf::Sprite charSprite;
         sf::Texture charTexture;
-        enum class PelletType {
-            REGULAR,
-            POWER,
-            NONE
-        };
-        PelletType pelletMap[36][28];
+        int pelletMap[36][28];
         int score;
-        void displayMap(sf::RenderWindow& window);
+
 };

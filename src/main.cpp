@@ -27,12 +27,12 @@ int main()
     sf::Sound sound;
     sf::Text text;
     sf::Font font;
-    //font.loadFromFile("Resources/pacman.ttf");
+    font.loadFromFile("Resources/pacman.ttf");
     text.setPosition(0,0);
     text.setCharacterSize(16);
 
     text.setFillColor(sf::Color::White);
-    //text.setFont(font);
+    text.setFont(font);
     sound.setVolume(30.f);
     SFX playlist;
     playlist.intro.play();

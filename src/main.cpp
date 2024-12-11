@@ -102,14 +102,14 @@ int main()
         pellet.score += pellet.addScore(pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y);
         text.setString(to_string(pellet.score));
         if(blinky.state == Ghost::State::SCATTER){
-            blinky.move(gameMap, blinky.goToCoords(gameMap, 16, 64),deltaTime);
+            blinky.move(gameMap, blinky.gTC(gameMap, 16, 64),deltaTime);
             blinky.timer -= deltaTime;
             if((blinky.charSprite.getPosition().x == 16 && blinky.charSprite.getPosition().y == 64) || blinky.timer <= 0){
                 blinky.timer = 20;
                 blinky.state = Ghost::State::NORMAL;
             }
         }else if(blinky.state == Ghost::State::NORMAL){
-            blinky.move(gameMap, blinky.goToCoords(gameMap, pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y),deltaTime);
+            blinky.move(gameMap, blinky.gTC(gameMap, pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y),deltaTime);
             blinky.timer -= deltaTime;
             if(blinky.timer <= 0){
                 blinky.timer = 10;

@@ -7,7 +7,7 @@ Ghost::Ghost(sf::Texture &texture, Type type) { // Use member initializer list
     speed = 99;
     timer = 10.00;
 }
-pair<int, int> Ghost::goToCoords(GameMap gameMap, double px, double py){
+pair<int, int> Ghost::gTC(GameMap gameMap, double px, double py){
     px = (int)(px/16); py = (int)(py/16);
     int x = charSprite.getPosition().x/16;
     int y = charSprite.getPosition().y/16;

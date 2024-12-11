@@ -27,6 +27,6 @@ class Ghost
         Type type;
         int speed;
         double timer;
-        pair<int, int> goToCoords(GameMap gameMap, double x, double y);
+        pair<int, int> gTC(GameMap gameMap, double x, double y);
         void move(GameMap gameMap, pair<int, int> s, double deltaTime);
 };

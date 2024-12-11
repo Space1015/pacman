@@ -42,7 +42,7 @@ GameMap::GameMap()
     mapTexture.loadFromFile("Resources/gamemap.png");
     mapSprite.setTexture(mapTexture);
 }
-void GameMap::displayMap(sf::RenderWindow& window, sf::Sprite charSprite, sf::Sprite dupe, sf::Sprite blinky, int pelletMap[36][28], sf::Sprite pSprite)
+void GameMap::displayMap(sf::RenderWindow& window, sf::Sprite charSprite, sf::Sprite dupe, sf::Sprite blinky, int pelletMap[36][28], sf::Sprite pSprite, sf::Text text)
 { 
     window.draw(mapSprite);
     for(int i = 0; i < 36; i++){
@@ -57,4 +57,5 @@ void GameMap::displayMap(sf::RenderWindow& window, sf::Sprite charSprite, sf::Sp
     dupe.setTexture(*charSprite.getTexture());
     window.draw(dupe);
     window.draw(blinky);
+    window.draw(text);
 }

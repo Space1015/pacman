@@ -25,6 +25,13 @@ int main()
     blinkyTexture.loadFromFile("Resources/blinky.png");
 
     sf::Sound sound;
+    sf::Text text;
+    sf::Font font;
+    font.loadFromFile("Resources/pacman.ttf");
+    text.setPosition(0,0);
+    text.setCharacterSize(16);
+    text.setFillColor(sf::Color::White);
+    text.setFont(font);
     sound.setVolume(30.f);
     SFX playlist;
     playlist.intro.play();
@@ -45,7 +52,7 @@ int main()
     float animation_timer = 0.0f;
     int current_frame = 0;
     const int TOTAL_FRAMES = 8;
-    gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite, pellet.pelletMap, pellet.charSprite);
+    gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite, pellet.pelletMap, pellet.charSprite, text);
     window.display();
     playlist.siren.setLoop(true);
     playlist.siren.play();
@@ -91,20 +98,21 @@ int main()
         }
         current_frame = pacman.move(gameMap, deltaTime, current_frame, direction);
         pellet.score += pellet.addScore(pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y);
+        text.setString(to_string(pellet.score));
         blinky.move(gameMap, blinky.goToCoords(gameMap, pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y),deltaTime);
-        // if(blinky.charSprite.getGlobalBounds().intersects(pacman.charSprite.getGlobalBounds())){
-        //     playlist.siren.stop();
-        //     playlist.death.play();
-        //     while (playlist.death.getStatus() == sf::Sound::Playing) {
-        //         sf::sleep(sf::milliseconds(100));
-        //     }
-        //     sf::sleep(sf::milliseconds(1000));
-        //     break; 
-        // }
+        if(blinky.charSprite.getGlobalBounds().intersects(pacman.charSprite.getGlobalBounds())){
+            playlist.siren.stop();
+            playlist.death.play();
+            while (playlist.death.getStatus() == sf::Sound::Playing) {
+                sf::sleep(sf::milliseconds(100));
+            }
+            sf::sleep(sf::milliseconds(1000));
+            break; 
+        }
 
         direction = {false, false, false, false};
         window.clear();
-        gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite, pellet.pelletMap, pellet.charSprite);
+        gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite, pellet.pelletMap, pellet.charSprite, text);
         window.display();
     }
 }

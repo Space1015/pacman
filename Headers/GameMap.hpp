@@ -13,6 +13,6 @@ class GameMap
         GameMap();
         sf::Sprite mapSprite;
         sf::Texture mapTexture;
-        void displayMap(sf::RenderWindow& window, sf::Sprite charSprite, sf::Sprite dupe, sf::Sprite blinky, int pelletMap[36][28], sf::Sprite pSprite);
+        void displayMap(sf::RenderWindow& window, sf::Sprite charSprite, sf::Sprite dupe, sf::Sprite blinky, int pelletMap[36][28], sf::Sprite pSprite, sf::Text text);
         vector<string> mapData;
 };

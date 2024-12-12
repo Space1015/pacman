@@ -37,6 +37,9 @@ int main()
     sound.setVolume(30.f);
     SFX playlist;
     playlist.intro.play();
+    playlist.siren.setLoop(true);
+    playlist.waka.setLoop(true);
+    playlist.waka.setVolume(15.f);
 
     GameMap gameMap;
     Pacman pacman;
@@ -63,8 +66,7 @@ int main()
     const int TOTAL_FRAMES = 8;
     gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite, pellet.pelletMap, pellet.charSprite, text);
     window.display();
-    playlist.siren.setLoop(true);
-    playlist.siren.play();
+
     while (window.isOpen())
     {
         //pacman animation
@@ -87,9 +89,8 @@ int main()
 
         //wait for start music to finish
         while (playlist.intro.getStatus()==sf::Music::Playing) {
-            playlist.siren.stop();
             sf::sleep(sf::milliseconds(100));
-            playlist.siren.play();
+            playlist.waka.play();
         }
         //pacman keyboard control movement and animation
         if(kP(sf::Keyboard::W) || kP(sf::Keyboard::Up))
@@ -108,12 +109,16 @@ int main()
         current_frame = pacman.move(gameMap, deltaTime, current_frame, direction);
         pellet.score += pellet.addScore(pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y);
         text.setString(to_string(pellet.score));
+
+
         if(blinky.state == Ghost::State::SCATTER){
             blinky.move(gameMap, blinky.gTC(gameMap, 16, 64),deltaTime);
             blinky.timer -= deltaTime;
             if((blinky.charSprite.getPosition().x == 16 && blinky.charSprite.getPosition().y == 64) || blinky.timer <= 0){
                 blinky.timer = 20;
                 blinky.state = Ghost::State::NORMAL;
+                playlist.waka.stop();
+                playlist.siren.play();
             }
             //just copy same code for rest like pinky.move(gameMap, blinky.gTC(gameMap, 432, 64),deltaTime);
         }else if(blinky.state == Ghost::State::NORMAL){
@@ -122,6 +127,8 @@ int main()
             if(blinky.timer <= 0){
                 blinky.timer = 10;
                 blinky.state = Ghost::State::SCATTER;
+                playlist.waka.play();
+                playlist.siren.stop();
             }
         }
         direction = {false, false, false, false};
@@ -130,6 +137,7 @@ int main()
         window.display();
         if(blinky.charSprite.getGlobalBounds().intersects(pacman.charSprite.getGlobalBounds())){
             playlist.siren.stop();
+            playlist.waka.stop();
             playlist.death.play();
             while (playlist.death.getStatus() == sf::Sound::Playing) {
                 sf::sleep(sf::milliseconds(10));

@@ -4,7 +4,7 @@ Ghost::Ghost(sf::Texture &texture, Type type) { // Use member initializer list
     charSprite.setTexture(texture);
     state = Ghost::State::SCATTER;
     charSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
-    speed = 99;
+    speed = 88;
     timer = 10.00;
 }
 pair<int, int> Ghost::gTC(GameMap gameMap, double px, double py){

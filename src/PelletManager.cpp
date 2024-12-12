@@ -22,25 +22,25 @@ int PelletManager::addScore(double x, double y){
     int ret = 0;
     if(fmod(x, 16) == 0 && fmod(y, 16) == 0){
         if(pelletMap[(int)y/16][(int)x/16] != 0){
-            ret += pelletMap[(int)y/16][(int)x/16] * 10 + max(0,pelletMap[(int)y/16][(int)x/16] - 1) * 30;
+            ret += 10;
             pelletMap[(int)y/16][(int)x/16] = 0;
         }
     }else if(fmod(x,16 == 0)){
         if(pelletMap[(int)y/16][(int)x/16] != 0 && (int)y/16 * 16 + 10 > y){// make sure the pellet intersects with pacman
-            ret += pelletMap[(int)y/16][(int)x/16] * 10 + max(0,pelletMap[(int)y/16][(int)x/16] - 1) * 30;
+            ret += 10;
             pelletMap[(int)y/16][(int)x/16] = 0;
         }
         if(pelletMap[(int)y/16 + 1][(int)x/16] != 0 && (int)y/16 * 16 + 6 < y){
-            ret += pelletMap[(int)y/16][(int)x/16] * 10 + max(0,pelletMap[(int)y/16][(int)x/16] - 1) * 30;
+            ret += 10;
             pelletMap[(int)y/16 + 1][(int)x/16] = 0;
         }
-    }else{
+    }else {
         if(pelletMap[(int)y/16][(int)x/16] != 0 && (int)x/16 * 16 + 10 > x){
-            ret += pelletMap[(int)y/16][(int)x/16] * 10 + max(0,pelletMap[(int)y/16][(int)x/16] - 1) * 30;
+            ret += 10;
             pelletMap[(int)y/16][(int)x/16] = 0;
         }
         if(pelletMap[(int)y/16][(int)x/16 + 1] != 0 && (int)x/16 * 16 + 6 < x){
-            ret += pelletMap[(int)y/16][(int)x/16] * 10 + max(0,pelletMap[(int)y/16][(int)x/16] - 1) * 30;
+            ret += 10;
             pelletMap[(int)y/16][(int)x/16 + 1] = 0;
         }
     }

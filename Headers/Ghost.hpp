@@ -15,10 +15,17 @@ class Ghost
             PINKY,
             CLYDE
         };
-        enum class State{
+        enum class State{// make this a static var
             NORMAL,
             SCATTER,
             FRIGHTENED
+        };
+        enum class Dir{
+            UP,
+            DOWN,
+            LEFT,
+            RIGHT,
+            STILL
         };
         State state;
         Ghost(sf::Texture &texture, Type type);

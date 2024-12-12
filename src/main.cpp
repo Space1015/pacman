@@ -43,6 +43,8 @@ int main()
     sound2.setLoop(true);
     sound2.setBuffer(playlist.siren1);
     sound->setBuffer(playlist.waka);
+    sound->play();
+    sound->pause();
 
     GameMap gameMap;
     Pacman pacman;
@@ -120,7 +122,8 @@ int main()
             if((blinky.charSprite.getPosition().x == 16 && blinky.charSprite.getPosition().y == 64) || blinky.timer <= 0){
                 blinky.timer = 20;
                 blinky.state = Ghost::State::NORMAL;
-                sound2.setBuffer(playlist.siren1);
+                sound2.setBuffer(playlist.siren2);
+                sound2.play();
             }
             //just copy same code for rest like pinky.move(gameMap, blinky.gTC(gameMap, 432, 64),deltaTime);
         }else if(blinky.state == Ghost::State::NORMAL){
@@ -129,7 +132,8 @@ int main()
             if(blinky.timer <= 0){
                 blinky.timer = 10;
                 blinky.state = Ghost::State::SCATTER;
-                sound2.setBuffer(playlist.siren2);
+                sound2.setBuffer(playlist.siren1);
+                sound2.play();
             }
         }
         direction = {false, false, false, false};
@@ -139,6 +143,7 @@ int main()
         if(blinky.charSprite.getGlobalBounds().intersects(pacman.charSprite.getGlobalBounds())){
             sound2.stop();
             sound->stop();
+            playlist.death.setVolume(20.f);
             playlist.death.play();
             while (playlist.death.getStatus() == sf::Sound::Playing) {
                 sf::sleep(sf::milliseconds(10));

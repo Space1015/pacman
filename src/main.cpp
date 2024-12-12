@@ -43,8 +43,7 @@ int main()
     sound2.setLoop(true);
     sound2.setBuffer(playlist.siren1);
     sound->setBuffer(playlist.waka);
-    sound->play();
-    sound->pause();
+    float wakaTime = sound->getPlayingOffset().asSeconds();
 
     GameMap gameMap;
     Pacman pacman;
@@ -112,9 +111,14 @@ int main()
             direction[3] = true;
         }
         current_frame = pacman.move(gameMap, deltaTime, current_frame, direction);
+        int temp = pellet.score;
         pellet.score += pellet.addScore(pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y, sound);
         text.setString(to_string(pellet.score));
-        sound->pause();
+        if(pellet.score!=temp) {
+            sound->play();
+        } else if (wakaTime <= 0.1){
+            sound->pause();
+        }
 
         if(blinky.state == Ghost::State::SCATTER){
             blinky.move(gameMap, blinky.gTC(gameMap, 16, 64),deltaTime);

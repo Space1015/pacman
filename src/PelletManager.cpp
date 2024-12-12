@@ -18,6 +18,10 @@ PelletManager::PelletManager(GameMap gameMap) {
         }
     }
 }
+int getRemainingPellets() const
+{
+    return totalPellets;
+}
 int PelletManager::addScore(double x, double y){
     int ret = 0;
     if(fmod(x, 16) == 0 && fmod(y, 16) == 0){

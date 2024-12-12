@@ -73,6 +73,30 @@ int main()
 
     while (window.isOpen())
     {
+        pellet.score += pellet.addScore(pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y, sound);
+        text.setString(to_string(pellet.score));
+
+        if (pellet.getRemainingPellets() == 0)
+        {
+            sound->stop();
+            sound2.stop();
+            playlist.end.play();
+
+            sf::Text winText;
+            winText.setFont(font);
+            winText.setString("YOU WIN! SCORE: <score>");
+            winText.setCharacterSize(32);
+            winText.setFillColor(sf::Color::Yellow);
+            winText.setPosition(window.getSize().x / 2 - 60, window.getSize().y / 2 - 20);
+
+            window.clear();
+            window.draw(winText);
+            window.display();
+
+            sf::sleep(sf::seconds(5));
+            window.close();
+        }
+        
         //pacman animation
         pacman.dupe.setPosition(-100,-100);
         float deltaTime = clock.restart().asSeconds();

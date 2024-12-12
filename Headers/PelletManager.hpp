@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <GameMap.hpp>
 #include <utility>
+#include <SFML/Audio.hpp>
 
 using namespace std;
 
@@ -14,7 +15,7 @@ class PelletManager {
         sf::Texture charTexture;
         int pelletMap[36][28];
         int score;
-        int addScore(double x, double y);
+        int addScore(double x, double y, sf::Sound* sound);
         
 
 };

@@ -24,7 +24,6 @@ int main()
     sf::Texture blinkyTexture;
     blinkyTexture.loadFromFile("Resources/blinky.png");
 
-    sf::Sound sound;
     sf::Text text;
     sf::Font font;
     font.loadFromFile("Resources/pacman.ttf");
@@ -34,12 +33,16 @@ int main()
     text.setFont(font);
     text.setFillColor(sf::Color::White);
 
-    sound.setVolume(30.f);
+    sf::Sound* sound = new sf::Sound;
+    sf::Sound sound2;
+    sound->setVolume(15.f);
+    sound2.setVolume(30.f);
     SFX playlist;
     playlist.intro.play();
-    playlist.siren.setLoop(true);
-    playlist.waka.setLoop(true);
-    playlist.waka.setVolume(15.f);
+    sound->setLoop(true);
+    sound2.setLoop(true);
+    sound2.setBuffer(playlist.siren1);
+    sound->setBuffer(playlist.waka);
 
     GameMap gameMap;
     Pacman pacman;
@@ -89,8 +92,8 @@ int main()
 
         //wait for start music to finish
         while (playlist.intro.getStatus()==sf::Music::Playing) {
-            sf::sleep(sf::milliseconds(100));
-            playlist.waka.play();
+            sound2.setBuffer(playlist.siren1);
+            sound2.play();
         }
         //pacman keyboard control movement and animation
         if(kP(sf::Keyboard::W) || kP(sf::Keyboard::Up))
@@ -107,9 +110,9 @@ int main()
             direction[3] = true;
         }
         current_frame = pacman.move(gameMap, deltaTime, current_frame, direction);
-        pellet.score += pellet.addScore(pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y);
+        pellet.score += pellet.addScore(pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y, sound);
         text.setString(to_string(pellet.score));
-
+        sound->pause();
 
         if(blinky.state == Ghost::State::SCATTER){
             blinky.move(gameMap, blinky.gTC(gameMap, 16, 64),deltaTime);
@@ -117,8 +120,7 @@ int main()
             if((blinky.charSprite.getPosition().x == 16 && blinky.charSprite.getPosition().y == 64) || blinky.timer <= 0){
                 blinky.timer = 20;
                 blinky.state = Ghost::State::NORMAL;
-                playlist.waka.stop();
-                playlist.siren.play();
+                sound2.setBuffer(playlist.siren1);
             }
             //just copy same code for rest like pinky.move(gameMap, blinky.gTC(gameMap, 432, 64),deltaTime);
         }else if(blinky.state == Ghost::State::NORMAL){
@@ -127,8 +129,7 @@ int main()
             if(blinky.timer <= 0){
                 blinky.timer = 10;
                 blinky.state = Ghost::State::SCATTER;
-                playlist.waka.play();
-                playlist.siren.stop();
+                sound2.setBuffer(playlist.siren2);
             }
         }
         direction = {false, false, false, false};
@@ -136,8 +137,8 @@ int main()
         gameMap.displayMap(window, pacman.charSprite, pacman.dupe, blinky.charSprite, pellet.pelletMap, pellet.charSprite, text);
         window.display();
         if(blinky.charSprite.getGlobalBounds().intersects(pacman.charSprite.getGlobalBounds())){
-            playlist.siren.stop();
-            playlist.waka.stop();
+            sound2.stop();
+            sound->stop();
             playlist.death.play();
             while (playlist.death.getStatus() == sf::Sound::Playing) {
                 sf::sleep(sf::milliseconds(10));
@@ -146,4 +147,5 @@ int main()
             break; 
         }
     }
+    delete sound;
 }

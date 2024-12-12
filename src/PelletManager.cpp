@@ -18,7 +18,7 @@ PelletManager::PelletManager(GameMap gameMap) {
         }
     }
 }
-int PelletManager::addScore(double x, double y, sf::Sound* sound){
+int PelletManager::addScore(double x, double y){
     int ret = 0;
     if(fmod(x, 16) == 0 && fmod(y, 16) == 0){
         if(pelletMap[(int)y/16][(int)x/16] != 0){

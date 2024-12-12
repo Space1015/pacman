@@ -112,11 +112,11 @@ int main()
         }
         current_frame = pacman.move(gameMap, deltaTime, current_frame, direction);
         int temp = pellet.score;
-        pellet.score += pellet.addScore(pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y, sound);
+        pellet.score += pellet.addScore(pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y);
         text.setString(to_string(pellet.score));
         if(pellet.score!=temp) {
             sound->play();
-        } else if (wakaTime <= 0.1){
+        } else if (wakaTime <= 0.5){
             sound->pause();
         }
 

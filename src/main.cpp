@@ -13,7 +13,7 @@ using namespace std;
 int main()
 {
     auto window = sf::RenderWindow({448u, 576u}, "Pacman");
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(30);
 
     sf::Texture clydeTexture;
     clydeTexture.loadFromFile("Resources/clyde.png");
@@ -30,9 +30,10 @@ int main()
     font.loadFromFile("Resources/pacman.ttf");
     text.setPosition(0,0);
     text.setCharacterSize(16);
-
     text.setFillColor(sf::Color::White);
     text.setFont(font);
+    text.setFillColor(sf::Color::White);
+
     sound.setVolume(30.f);
     SFX playlist;
     playlist.intro.play();
@@ -42,6 +43,12 @@ int main()
     PelletManager pellet(gameMap);
     Ghost blinky(blinkyTexture, Ghost::Type::BLINKY);
     blinky.charSprite.setPosition(216, 224);
+    Ghost pinky(pinkyTexture, Ghost::Type::PINKY);
+    pinky.charSprite.setPosition(224, 216);
+    Ghost inky(inkyTexture, Ghost::Type::INKY);
+    pinky.charSprite.setPosition(200, 224);
+    Ghost clyde(clydeTexture, Ghost::Type::CLYDE);
+    pinky.charSprite.setPosition(224, 200);
     const float ANIMATION_FRAME_DURATION = 0.1f;
 
     sf::Clock clock;
@@ -108,6 +115,7 @@ int main()
                 blinky.timer = 20;
                 blinky.state = Ghost::State::NORMAL;
             }
+            //just copy same code for rest like pinky.move(gameMap, blinky.gTC(gameMap, 432, 64),deltaTime);
         }else if(blinky.state == Ghost::State::NORMAL){
             blinky.move(gameMap, blinky.gTC(gameMap, pacman.charSprite.getPosition().x, pacman.charSprite.getPosition().y),deltaTime);
             blinky.timer -= deltaTime;

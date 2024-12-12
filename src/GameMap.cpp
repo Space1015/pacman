@@ -57,6 +57,5 @@ void GameMap::displayMap(sf::RenderWindow& window, sf::Sprite charSprite, sf::Sp
     dupe.setTexture(*charSprite.getTexture());
     window.draw(dupe);
     window.draw(blinky);
-    text.setFillColor(sf::Color::White);
     window.draw(text);
 }

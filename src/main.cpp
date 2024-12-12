@@ -86,7 +86,7 @@ int main()
             winText.setFont(font);
             winText.setString("YOU WIN! SCORE: <score>");
             winText.setCharacterSize(32);
-            winText.setFillColor(sf::Color::Yellow);
+            winText.setFillColor(sf::Color::White);
             winText.setPosition(window.getSize().x / 2 - 60, window.getSize().y / 2 - 20);
 
             window.clear();

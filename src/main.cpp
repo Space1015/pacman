@@ -12,32 +12,32 @@ using namespace std;
 #define kP(x) sf::Keyboard::isKeyPressed(x)
 int main()
 {
+    /* Initializing Phase */
+
+    /* Creating Game */
     auto window = sf::RenderWindow({448u, 576u}, "Pacman");
     window.setFramerateLimit(60);
+    GameMap gameMap;
 
-    sf::Texture clydeTexture;
+    /* Textures of Ghosts */
+    sf::Texture clydeTexture, pinkyTexture, inkyTexture, blinkyTexture;
     clydeTexture.loadFromFile("Resources/clyde.png");
-    sf::Texture pinkyTexture;
     pinkyTexture.loadFromFile("Resources/pinky.png");
-    sf::Texture inkyTexture;
     inkyTexture.loadFromFile("Resources/inky.png");
-    sf::Texture blinkyTexture;
     blinkyTexture.loadFromFile("Resources/blinky.png");
 
     sf::Sound sound;
     sf::Text text;
     sf::Font font;
-    //font.loadFromFile("Resources/pacman.ttf");
+    font.loadFromFile("Resources/pacman.ttf");
     text.setPosition(0,0);
     text.setCharacterSize(16);
-
     text.setFillColor(sf::Color::White);
-    //text.setFont(font);
+    text.setFont(font);
     sound.setVolume(30.f);
     SFX playlist;
     playlist.intro.play();
-
-    GameMap gameMap;
+ 
     Pacman pacman;
     PelletManager pellet(gameMap);
     Ghost blinky(blinkyTexture, Ghost::Type::BLINKY);
@@ -58,6 +58,7 @@ int main()
     window.display();
     playlist.siren.setLoop(true);
     playlist.siren.play();
+    
     while (window.isOpen())
     {
         //pacman animation
